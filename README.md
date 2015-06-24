@@ -15,7 +15,10 @@ For å kjøre ligabot trenger du Python 3 og noen ekstra biblioteker. Innstaller
     python -m pip install BeautifulSoup4
     python -m pip install twython
 
-fra kommandolinjen. 
+fra kommandolinjen.
+
+Den første gangen skriptet kjøres, vil en fil `settings.py` med de nødvendige
+innstillingene automatisk bli opprettet. Denne filen må redigeres av brukeren.
 
 ## Kjøring
 

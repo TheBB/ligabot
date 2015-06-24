@@ -16,12 +16,20 @@ import html.parser
 html_parser = html.parser.HTMLParser()
 import praw
 import os.path
+import shutil
 import re
 import twython
 Twython = twython.Twython
 import os
+import sys
 from random import randint
-from ligabot import twitter, reddit
+
+try:
+    from settings import twitter, reddit
+except ImportError:
+    shutil.copyfile('settings.default.py', 'settings.py')
+    print('Filen `settings.py` ble automatisk opprettet. Fyll inn innstillingene der.')
+    sys.exit(1)
 
 username = reddit['username']
 password = reddit['password']
@@ -221,7 +229,6 @@ def days_between(d1, d2):
     return abs((d2 - d1).days)
 
 def createNecessaryFiles():
-    createLigabot()
     createFileIfNotExisting("rundesjekk")
     
 def createFileIfNotExisting(file):
@@ -231,27 +238,6 @@ def createFileIfNotExisting(file):
         newfile.close()
         return True
     return False
-    
-def createLigabot():
-    wantedFile = "ligabot.py"
-    created = createFileIfNotExisting(wantedFile)
-    if created:
-        with codecs.open(createFilePathToScriptFolder(wantedFile), "w", "utf-8") as ligafile:
-            ligafile.write("""#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-twitter = {
-    'consumer_key': 'xxx',
-    'consumer_secret': 'xxx',
-    'access_token_key': 'xxx',
-    'access_token_secret': 'xxx'
-}
-
-reddit = {
-    'username': 'xxx',
-    'password': 'xxx',
-    'useragent': 'In service for /r/Tippeligaen, made by /u/armandg'
-}
-""")
 
 
 def createFilePathToScriptFolder(filename):
